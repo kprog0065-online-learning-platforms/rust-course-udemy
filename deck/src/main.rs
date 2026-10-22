@@ -3,20 +3,25 @@ struct Deck {
     cards: Vec<String>,
 }
 
-fn main() {
-    let suits = ["Hearts", "Spades", "Diamonds", "Clubs"];
-    let values = ["Ace", "Two", "Three"];
+impl Deck {
+    fn new() -> Deck {
+        let suits = ["Hearts", "Spades", "Diamonds", "Clubs"];
+        let values = ["Ace", "Two", "Three"];
 
-    let mut cards = vec![];
+        let mut cards = vec![];
 
-    for suit in suits {
-        for value in values {
-            let card = format!("{} of {}", value, suit);
-            cards.push(card);
+        for suit in suits {
+            for value in values {
+                let card = format!("{} of {}", value, suit);
+                cards.push(card);
+            }
         }
+
+        Deck { cards }
     }
+}
 
-    let deck: Deck = Deck { cards };
-
+fn main() {
+    let deck = Deck::new();
     println!("Heres your deck: {:#?}", deck);
 }
