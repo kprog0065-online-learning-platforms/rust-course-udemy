@@ -1,0 +1,14 @@
+# Rust build output — all projects, at any depth
+target/
+
+# Rust backup files
+**/*.rs.bk
+
+# Local environment files
+.env
+.env.*
+!.env.example
+
+# Operating-system clutter
+.DS_Store
+Thumbs.db
