@@ -88,5 +88,12 @@ fn main() {
     catalog.add(podcast);
     catalog.add(placeholder);
 
-    println!("{:#?}", catalog);
+    match catalog.items.get(0) {
+        Some(value) => {
+            println!("Item: {:#?}", value);
+        }
+        None => {
+            println!("Item not found")
+        }
+    }
 }
