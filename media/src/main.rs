@@ -1,80 +1,7 @@
-#[derive(Debug)]
-enum Media {
-    Book { title: String, author: String },
-    Movie { title: String, director: String },
-    Audiobook { title: String },
-    Podcast(u32),
-    Placeholder,
-}
+mod content;
 
-impl Media {
-    fn description(&self) -> String {
-        //     if let Media::Book { title, author } = self {
-        //         format!("Book: '{}' by {}", title, author)
-        //     } else if let Media::Movie { title, director } = self {
-        //         format!("Movie: '{}' directed by {}", title, director)
-        //     } else if let Media::Audiobook { title } = self {
-        //         format!("Audiobook: '{}'", title)
-        //     } else {
-        //         String::from("Media description")
-        //     }
-        // }
-
-        // pattern matching is more idiomatic than if let chains
-        // if else chains are more useful for error handling, but pattern matching is more idiomatic for enums
-        match self {
-            Media::Book { title, author } => {
-                format!("Book: '{}' by {}", title, author)
-            }
-            Media::Movie { title, director } => {
-                format!("Movie: '{}' directed by {}", title, director)
-            }
-            Media::Audiobook { title } => {
-                format!("Audiobook: '{}'", title)
-            }
-            Media::Podcast(id) => {
-                format!("Podcast: '{}'", id)
-            }
-            Media::Placeholder => {
-                format!("Placeholder")
-            }
-        }
-    }
-}
-
-#[derive(Debug)]
-struct Catalog {
-    items: Vec<Media>,
-}
-
-impl Catalog {
-    fn new() -> Self {
-        Catalog { items: vec![] }
-    }
-
-    fn add(&mut self, media: Media) {
-        self.items.push(media);
-    }
-
-    fn get_by_index(&self, index: usize) -> MightHaveAValue {
-        if self.items.len() > index {
-            // Good! We have somethign to return
-            MightHaveAValue::ThereIsAValue(&self.items[index])
-        } else {
-            // Bad! We don't have anything to return!!!
-            MightHaveAValue::NoValueAvailable
-        }
-    }
-}
-
-enum MightHaveAValue<'a> {
-    ThereIsAValue(&'a Media),
-    NoValueAvailable,
-}
-
-fn print_media(media: Media) {
-    println!("{:#?}", media);
-}
+use content::catalog::Catalog;
+use content::media::Media;
 
 fn main() {
     let audiobook = Media::Audiobook {
@@ -103,18 +30,8 @@ fn main() {
     catalog.add(podcast);
     catalog.add(placeholder);
 
-    // match catalog.items.get(0) {
-    //     Some(value) => {
-    //         println!("Item: {:#?}", value);
-    //     }
-    //     None => {
-    //         println!("Item not found")
-    //     }
-    // }
+    let item = catalog.get_by_index(3);
+    let placeholder = Media::Placeholder;
 
-    if let MightHaveAValue::ThereIsAValue(value) = catalog.get_by_index(99990) {
-        println!("Item in pattern match: {:#?}", value)
-    } else {
-        println!("No value!!!!!!!!!!");
-    }
+    println!("{:#?}", item.unwrap_or(&placeholder));
 }
