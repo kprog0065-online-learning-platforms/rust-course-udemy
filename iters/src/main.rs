@@ -40,4 +40,5 @@ fn main() {
 
     let mut destination = vec![];
     move_elements(colors, &mut destination);
+    print!("{:?}", destination);
 }
