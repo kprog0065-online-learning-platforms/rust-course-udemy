@@ -23,11 +23,18 @@
 //     vec_a.into_iter().for_each(|el| vec_b.push(el));
 // }
 
-fn explode(elements: &[String]) -> Vec<Vec<String>> {
+// fn explode(elements: &[String]) -> Vec<Vec<String>> {
+//     elements
+//         .iter()
+//         .map(|el| el.chars().map(|c| c.to_string()).collect())
+//         .collect()
+// }
+
+fn find_color_or(elements: &[String], search: &str, fallback: &str) -> String {
     elements
         .iter()
-        .map(|el| el.chars().map(|c| c.to_string()).collect())
-        .collect()
+        .find(|el| el.contains(search))
+        .map_or(String::from(fallback), |el| el.to_string())
 }
 
 fn main() {
@@ -49,6 +56,9 @@ fn main() {
     // move_elements(colors, &mut destination);
     // print!("{:?}", destination);
 
-    let exploded = explode(&colors);
-    println!("{:?}", exploded);
+    // let exploded = explode(&colors);
+    // println!("{:?}", exploded);
+
+    let found_color = find_color_or(&colors, "lu", "Orange");
+    println!("{}", found_color);
 }
